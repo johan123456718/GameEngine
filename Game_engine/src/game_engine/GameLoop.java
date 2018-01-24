@@ -14,8 +14,8 @@ import java.util.logging.Logger;
  */
 public class GameLoop implements Runnable {
     
-    boolean render = false;
     private Thread thread;
+    private Render renderer;
     private Window window;
 	
     
@@ -57,8 +57,8 @@ public class GameLoop implements Runnable {
     public void setTitle(String title) {
         this.title = title;
     }
-    private int width = 320, height = 240;
-    private float scale = 4f;
+    private int width = 800, height = 800;
+    private float scale = 1f;
     private String title = "GameEngine";
     
     
@@ -69,6 +69,7 @@ public class GameLoop implements Runnable {
     public void start(){
         window = new Window(this);
         thread = new Thread(this); 
+        renderer = new Render(this);
         thread.run();
     }
     
@@ -77,7 +78,10 @@ public class GameLoop implements Runnable {
     }
     
     public void run(){
+        
         running = true;
+        
+        boolean render = false;
         double firstTime = 0;
         double lastTime = System.nanoTime() / 1000000000.0;
         double passedTime = 0;
@@ -110,6 +114,7 @@ public class GameLoop implements Runnable {
                 System.out.println("FPS:" + fps);
             }
             if(render){
+                renderer.clear();
                 window.update();
                 frame ++;
                 //Att göra : rendera spelet
