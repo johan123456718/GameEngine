@@ -21,8 +21,8 @@ public class GameLoop implements Runnable {
     private boolean running = false;
     private final double UPDATE_CAP = 1.0/60.0;
 
-    private int width = 800, height = 800;
-    private float scale = 1f;
+    private int width = 300, height = 200;
+    private float scale = 3f;
     private String title = "GameEngine";
     
     public GameLoop (){
@@ -72,13 +72,13 @@ public class GameLoop implements Runnable {
                     frameTime = 0;
                     fps = frames;
                     frames = 0;
-                    System.out.println("FPS:" + fps);
                 }
                 //Att göra : uppdatera spelet
             }
             
             if(render){
                 renderer.clear();
+                renderer.drawText("FPS: " + fps, 0, 0, 0xff00ffff);
                 window.update();
                 frames ++;
                 //Att göra : rendera spelet

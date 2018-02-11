@@ -1,21 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package game_engine;
 
+import game_engine.gfx.Font;
 import game_engine.gfx.Image;
 import game_engine.gfx.ImageTile;
 import java.awt.image.DataBufferInt;
 
-/**
- *
- * @author Elev
- */
 public class Render{
+    
     private int pW,pH;
     private int[] p;
+    
+    public Font font = Font.STANDARD;
     
     public Render(GameLoop gc){
         pW = gc.getWidth();
@@ -25,8 +20,37 @@ public class Render{
     }
     public void clear(){
         for(int i = 0; i < p.length; i++){
-            p[i] += i;
+            p[i] = 0;
         }
+    }
+    
+    //Render font
+    public void drawText(String text, int offX, int offY, int color){
+        
+        text = text.toUpperCase();
+        int offSet = 0;
+        
+        for(int i = 0; i < text.length(); i ++){
+            int unicode  = text.codePointAt(i) - 32;
+            
+            for(int y = 0; y < font.getFontImage().getHeight(); y++){
+            
+                for(int x = 0; x < font.getWidths()[unicode]; x++){
+                
+                    if(font.getFontImage().getPixel()[(x + font.getOffSets()[unicode]) + y * font.getFontImage().getWidth()] == 0xffffffff){
+                    
+                        setPixel(x + offX + offSet, y + offY, color);
+                        
+                    }
+                
+                }
+                
+            }
+            
+            offSet += font.getWidths()[unicode];
+            
+        }
+        
     }
     
     //Assigns the image pixels to an array and makes transparent for certain value
