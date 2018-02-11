@@ -28,6 +28,7 @@ public class Render{
         }
     }
     
+    //Assigns the image pixels to an array and makes transparent for certain value
     public void setPixel(int x, int y, int value){
     
         if((x < 0 || x >= pW || y < 0 || y >= pH) || value == 0xffff00ff){
@@ -40,11 +41,40 @@ public class Render{
         
     }
     
+    //Draws an image on screen
     public void drawImage(Image image, int offX, int offY){
     
-        for(int y = 0; y < image.getHeight(); y++){
+        int newX = 0;
+        int newY = 0;
+        int newWidth = image.getWidth();
+        int newHeight = image.getHeight();
         
-            for(int x = 0; x < image.getWidth(); x++){
+        //Don't render
+        if(offX < -newWidth){
+            return;  
+        }
+        if(offY < -newHeight){
+            return;  
+        }
+        
+        //Stop rendering when out of bounds
+        if(offX < 0){
+            newX -= offX; 
+        }
+        if(offY < 0){
+            newY -= offY;
+        }
+        if(newWidth + offX > pW){
+            newWidth -= newWidth + offX - pW;
+        }
+        if(newHeight + offY > pH){
+            newHeight -= newHeight + offY - pH;
+        }
+        
+        //Render code
+        for(int y = newY; y < newHeight; y++){
+        
+            for(int x = newX; x < newWidth; x++){
                 
                 setPixel(x + offX, y + offY, image.getPixel()[x + y * image.getWidth()]);
                 
