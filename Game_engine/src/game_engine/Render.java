@@ -91,6 +91,7 @@ public class Render{
         
     }
     
+    //Draws an imagetile on screen
     public void drawImageTile(ImageTile image, int offX, int offY, int tileX, int tileY){
     
         //Don't render
