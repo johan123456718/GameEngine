@@ -56,18 +56,24 @@ public class Render{
         if(offY < -newHeight){
             return;  
         }
+        if(offX >= pW){
+            return;  
+        }
+        if(offY >= pH){
+            return;  
+        }
         
-        //Stop rendering when out of bounds
+        //Clipping
         if(offX < 0){
             newX -= offX; 
         }
         if(offY < 0){
             newY -= offY;
         }
-        if(newWidth + offX > pW){
+        if(newWidth + offX >= pW){
             newWidth -= newWidth + offX - pW;
         }
-        if(newHeight + offY > pH){
+        if(newHeight + offY >= pH){
             newHeight -= newHeight + offY - pH;
         }
         
