@@ -18,10 +18,91 @@ public class GameLoop implements Runnable {
     private Render renderer;
     private Window window;
 	
-    
     private boolean running = false;
     private final double UPDATE_CAP = 1.0/60.0;
 
+    private int width = 800, height = 800;
+    private float scale = 1f;
+    private String title = "GameEngine";
+    
+    public GameLoop (){
+        
+    }
+    
+    public void start(){
+        window = new Window(this);
+        thread = new Thread(this); 
+        renderer = new Render(this);
+        thread.run();
+    }
+    
+    public void stop(){
+        
+    }
+    
+    public void run(){
+        
+        running = true;
+        
+        boolean render = false;
+        double firstTime = 0;
+        double lastTime = System.nanoTime() / 1000000000.0;
+        double passedTime = 0;
+        double unproccedTime = 0;
+        
+        double frameTime = 0;
+        int frames = 0;
+        int fps = 0;
+        
+        while(running){
+            render = false;
+            firstTime = System.nanoTime() / 1000000000.0;
+            passedTime  = firstTime - lastTime;
+            lastTime = firstTime;
+            
+            unproccedTime += passedTime;
+            frameTime += passedTime;
+            
+            while  (unproccedTime >= UPDATE_CAP){
+                
+                unproccedTime -= UPDATE_CAP;
+                render = true;
+                
+                if(frameTime >= 1.0){
+                    frameTime = 0;
+                    fps = frames;
+                    frames = 0;
+                    System.out.println("FPS:" + fps);
+                }
+                //Att göra : uppdatera spelet
+            }
+            
+            if(render){
+                renderer.clear();
+                window.update();
+                frames ++;
+                //Att göra : rendera spelet
+            }else{
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+        
+        dispose(); 
+        
+    }
+    
+    private void dispose(){
+        
+    }
+    public static void main(String args []){
+        GameLoop gc = new GameLoop();
+        gc.start();
+    }
+    
     public int getWidth() {
         return width;
     }
@@ -56,86 +137,6 @@ public class GameLoop implements Runnable {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-    private int width = 800, height = 800;
-    private float scale = 1f;
-    private String title = "GameEngine";
-    
-    
-    public GameLoop (){
-        
-    }
-    
-    public void start(){
-        window = new Window(this);
-        thread = new Thread(this); 
-        renderer = new Render(this);
-        thread.run();
-    }
-    
-    public void stop(){
-        
-    }
-    
-    public void run(){
-        
-        running = true;
-        
-        boolean render = false;
-        double firstTime = 0;
-        double lastTime = System.nanoTime() / 1000000000.0;
-        double passedTime = 0;
-        double unproccedTime = 0;
-        
-        double frameTime = 0;
-        int frame = 0;
-        int fps = 0;
-        
-        while(running){
-            firstTime = System.nanoTime() / 1000000000.0;
-            passedTime  = firstTime - lastTime;
-            lastTime = firstTime;
-            
-            unproccedTime += passedTime;
-            frameTime += passedTime;
-            
-            while  (unproccedTime >= UPDATE_CAP){
-                unproccedTime -= UPDATE_CAP;
-                render = true;
-                System.out.println("Update");
-                
-                //Att göra : uppdatera spelet
-            }
-            
-            if(frameTime >= 1.0){
-                frameTime = 0;
-                frame = 0;
-                fps = frame;
-                System.out.println("FPS:" + fps);
-            }
-            if(render){
-                renderer.clear();
-                window.update();
-                frame ++;
-                //Att göra : rendera spelet
-            }
-            else{
-                try {
-                    Thread.sleep(1);
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        }
-        dispose(); 
-    }
-    
-    private void dispose(){
-        
-    }
-    public static void main(String args []){
-        GameLoop gc = new GameLoop();
-        gc.start();
     }
 
 }
