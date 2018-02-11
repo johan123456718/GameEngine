@@ -5,6 +5,7 @@
  */
 package game_engine;
 
+import game_engine.gfx.Image;
 import java.awt.image.DataBufferInt;
 
 /**
@@ -26,4 +27,31 @@ public class Render{
             p[i] += i;
         }
     }
+    
+    public void setPixel(int x, int y, int value){
+    
+        if((x < 0 || x >= pW || y < 0 || y >= pH) || value == 0xffff00ff){
+           
+            return;
+            
+        }
+        
+        p[x + y * pW] = value;
+        
+    }
+    
+    public void drawImage(Image image, int offX, int offY){
+    
+        for(int y = 0; y < image.getHeight(); y++){
+        
+            for(int x = 0; x < image.getWidth(); x++){
+                
+                setPixel(x + offX, y + offY, image.getPixel()[x + y * image.getWidth()]);
+                
+            }
+            
+        }
+        
+    }
+    
 }
