@@ -1,23 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package game_engine;
 
-import java.awt.BorderLayout;
-import java.awt.Canvas;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
+import java.awt.*;
+import java.awt.image.*;
 import javax.swing.JFrame;
 
-/**
- *
- * @author Elev
- */
 public class Window {
+    
     private JFrame frame;
     private BufferedImage image; 
     private Canvas canvas;
@@ -25,6 +13,7 @@ public class Window {
     private Graphics g;
     
     public Window (GameLoop gc){
+        
        image = new BufferedImage(gc.getWidth(), gc.getHeight(), BufferedImage.TYPE_INT_RGB);
        canvas = new Canvas();
        Dimension s = new Dimension((int)(gc.getWidth() * gc.getScale()), (int)(gc.getHeight() * gc.getScale()));
@@ -41,6 +30,7 @@ public class Window {
        frame.setResizable(false);
        frame.setVisible(true);
        
+       canvas.setFocusable(true);
        canvas.createBufferStrategy(2);
        bs = canvas.getBufferStrategy();
        g = bs.getDrawGraphics();
@@ -55,4 +45,12 @@ public class Window {
         g.drawImage(image,0, 0, canvas.getWidth(), canvas.getHeight(), null);
         bs.show();
     }
+
+    public JFrame getFrame() {
+        return frame;
+    }
+    public Canvas getCanvas() {
+        return canvas;
+    }
+    
 }

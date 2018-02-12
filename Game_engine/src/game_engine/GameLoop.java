@@ -5,6 +5,8 @@
  */
 package game_engine;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,6 +19,8 @@ public class GameLoop implements Runnable {
     private Thread thread;
     private Render renderer;
     private Window window;
+    private Input input;
+    private AbstractGame game;
 	
     private boolean running = false;
     private final double UPDATE_CAP = 1.0/60.0;
@@ -25,14 +29,18 @@ public class GameLoop implements Runnable {
     private float scale = 3f;
     private String title = "GameEngine";
     
-    public GameLoop (){
+    public GameLoop (AbstractGame game){
+        
+        this.game = game;
         
     }
     
     public void start(){
-        window = new Window(this);
-        thread = new Thread(this); 
+        window = new Window(this); 
         renderer = new Render(this);
+        input = new Input(this);
+        
+        thread = new Thread(this);
         thread.run();
     }
     
@@ -68,20 +76,24 @@ public class GameLoop implements Runnable {
                 unproccedTime -= UPDATE_CAP;
                 render = true;
                 
+                game.update(this, (float)UPDATE_CAP);
+                
+                input.update();
+                
                 if(frameTime >= 1.0){
                     frameTime = 0;
                     fps = frames;
                     frames = 0;
                 }
-                //Att göra : uppdatera spelet
+                
             }
             
             if(render){
                 renderer.clear();
                 renderer.drawText("FPS: " + fps, 0, 0, 0xff00ffff);
+                game.render(this, renderer);
                 window.update();
                 frames ++;
-                //Att göra : rendera spelet
             }else{
                 try {
                     Thread.sleep(1);
@@ -98,47 +110,36 @@ public class GameLoop implements Runnable {
     private void dispose(){
         
     }
-    public static void main(String args []){
-        GameLoop gc = new GameLoop();
-        gc.start();
-    }
-    
+   
     public int getWidth() {
         return width;
     }
-
     public void setWidth(int width) {
         this.width = width;
     }
-
     public int getHeight() {
         return height;
     }
-
     public void setHeight(int height) {
         this.height = height;
     }
-
     public float getScale() {
         return scale;
     }
-
     public void setScale(float scale) {
         this.scale = scale;
     }
-
     public String getTitle() {
         return title;
     }
-
     public Window getWindow() {
         return window;
     }
-
     public void setTitle(String title) {
         this.title = title;
     }
+    public Input getInput() {
+        return input;
+    }
 
 }
-
-//Update_cap ger oss snabbast möjliga vändningstid//
