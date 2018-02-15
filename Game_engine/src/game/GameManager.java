@@ -19,7 +19,7 @@ public class GameManager extends AbstractGame {
     
     @Override
     public void update(GameLoop gc, float dt) {
-  
+        
     }
 
     @Override

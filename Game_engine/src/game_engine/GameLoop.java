@@ -90,8 +90,9 @@ public class GameLoop implements Runnable {
             
             if(render){
                 renderer.clear();
-                renderer.drawText("FPS: " + fps, 0, 0, 0xff00ffff);
                 game.render(this, renderer);
+                renderer.process();
+                renderer.drawText("FPS: " + fps, 0, 0, 0xff00ffff);          
                 window.update();
                 frames ++;
             }else{

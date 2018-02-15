@@ -2,25 +2,66 @@ package game_engine;
 
 import game_engine.gfx.Font;
 import game_engine.gfx.Image;
+import game_engine.gfx.ImageRequest;
 import game_engine.gfx.ImageTile;
 import java.awt.image.DataBufferInt;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Render{
     
+    private Font font = Font.STANDARD;
+    private ArrayList<ImageRequest> imageRequest = new ArrayList<ImageRequest>();
+    
     private int pW,pH;
     private int[] p;
+    private int[]zBuffer;
     
-    public Font font = Font.STANDARD;
-    
+    private int zDepth = 0;
+    private boolean processing = false;
+ 
     public Render(GameLoop gc){
         pW = gc.getWidth();
         pH = gc.getHeight();
         p = ((DataBufferInt)gc.getWindow().getImage().getRaster().getDataBuffer()).getData();
+        zBuffer = new int[p.length];
+    }
+    
+    public void process(){
+        
+        processing = true;
+        
+        Collections.sort(imageRequest, new Comparator<ImageRequest>(){    
+            @Override
+            public int compare(ImageRequest i0, ImageRequest i1){
+                if(i0.zDepth < i1.zDepth){
+                    return 1;
+                }
+                if(i0.zDepth > i1.zDepth){
+                    return -1;
+                }
+                return 0;
+            } 
+        });
+        
+        for(int i = 0; i < imageRequest.size(); i++){
+            
+            ImageRequest ir = imageRequest.get(i);
+            setzDepth(ir.zDepth);
+            drawImage(ir.image, ir.offX, ir.offY);
+            
+        }
+        
+        imageRequest.clear();
+        processing = false;
         
     }
+    
     public void clear(){
         for(int i = 0; i < p.length; i++){
             p[i] = 0;
+            zBuffer[i] = 0;
         }
     }
     
@@ -56,18 +97,48 @@ public class Render{
     //Assigns the image pixels to an array and makes transparent for certain value
     public void setPixel(int x, int y, int value){
     
-        if((x < 0 || x >= pW || y < 0 || y >= pH) || ((value >> 24) & 0xff) == 0){
+        int alpha = ((value >> 24) & 0xff);
+        if((x < 0 || x >= pW || y < 0 || y >= pH) || alpha == 0){
            
             return;
             
         }
         
-        p[x + y * pW] = value;
+        int index = x + y + pW;
         
+        if(zBuffer[index] > zDepth){
+            
+            return;
+            
+        }
+        
+        zBuffer[index] = zDepth;
+        
+        if(alpha == 255){
+            
+            p[index] = value;
+            
+        }else{
+            
+            int pixelColor = p[index];
+            
+            int newRed = ((pixelColor >> 16) & 0xff) - (int)((((pixelColor >> 16) & 0xff) - ((value >> 16) & 0xff)) * (alpha/255f));
+            int newGreen = ((pixelColor >> 8) & 0xff) - (int)((((pixelColor >> 8) & 0xff) - ((value >> 8) & 0xff)) * (alpha/255f));
+            int newBlue = (pixelColor & 0xff) - (int)(((pixelColor & 0xff) - (value & 0xff)) * (alpha/255f));
+
+            p[index] = (255 << 24 | newRed << 16 | newGreen << 8 | newBlue); 
+            
+        }
+                
     }
     
     //Draws an image on screen
     public void drawImage(Image image, int offX, int offY){
+        
+        if(image.isAlpha() && !processing){
+            imageRequest.add(new ImageRequest(image, zDepth, offX, offY));
+            return;
+        }
     
         //Don't render
         if(offX < -image.getWidth()){
@@ -227,6 +298,13 @@ public class Render{
             
         }
         
+    }
+    
+    public int getzDepth() {
+        return zDepth;
+    }
+    public void setzDepth(int zDepth) {
+        this.zDepth = zDepth;
     }
     
 }
