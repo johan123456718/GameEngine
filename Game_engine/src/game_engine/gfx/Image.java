@@ -8,6 +8,7 @@ public class Image {
     
     private int width, height;
     private int[] pixel;
+    private boolean alpha = false;
     
     //Loads in an image then flushes it from path
     public Image(String Path){
@@ -28,6 +29,12 @@ public class Image {
         
     }
 
+    public boolean isAlpha() {
+        return alpha;
+    }
+    public void setAlpha(boolean alpha) {
+        this.alpha = alpha;
+    }
     public int getWidth() {
         return width;
     }
