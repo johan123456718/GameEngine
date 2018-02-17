@@ -9,8 +9,22 @@ public class ImageTile extends Image {
         super(path);
         this.tileWidth = tileWidth;
         this.tileHeight = tileHeight;
+  
+    }
+    
+    public Image getTileImage(int tileX, int tileY){
         
+        int pixel[] = new int [tileWidth * tileHeight];
         
+        for(int y = 0; y < tileHeight; y++){
+            for(int x = 0; x < tileWidth; x++){
+            
+               pixel[x + y * tileWidth] =  this.getPixel()[(x + tileX * tileWidth) + (y + tileY * tileHeight) * this.getWidth()];
+            
+            } 
+        }
+         
+        return new Image(pixel, tileWidth, tileHeight);
         
     }
 

@@ -111,7 +111,10 @@ public class GameLoop implements Runnable {
     private void dispose(){
         
     }
-   
+
+    public Render getRenderer() {
+        return renderer;
+    }
     public int getWidth() {
         return width;
     }

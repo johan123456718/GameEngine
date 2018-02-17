@@ -36,21 +36,19 @@ public class Render{
             @Override
             public int compare(ImageRequest i0, ImageRequest i1){
                 if(i0.zDepth < i1.zDepth){
-                    return 1;
+                    return -1;
                 }
                 if(i0.zDepth > i1.zDepth){
-                    return -1;
+                    return 11;
                 }
                 return 0;
             } 
         });
         
-        for(int i = 0; i < imageRequest.size(); i++){
-            
+        for(int i = 0; i < imageRequest.size(); i++){  
             ImageRequest ir = imageRequest.get(i);
             setzDepth(ir.zDepth);
             drawImage(ir.image, ir.offX, ir.offY);
-            
         }
         
         imageRequest.clear();
@@ -67,7 +65,7 @@ public class Render{
     
     //Render font
     public void drawText(String text, int offX, int offY, int color){
-        
+
         text = text.toUpperCase();
         int offSet = 0;
         
@@ -189,6 +187,11 @@ public class Render{
     //Draws an imagetile on screen
     public void drawImageTile(ImageTile image, int offX, int offY, int tileX, int tileY){
     
+        if(image.isAlpha() && !processing){
+            imageRequest.add(new ImageRequest(image.getTileImage(tileX, tileY), zDepth, offX, offY));
+            return;
+        }
+        
         //Don't render
         if(offX < -image.getTileWidth()){
             return;  
@@ -288,9 +291,9 @@ public class Render{
             newHeight -= newHeight + offY - pH;
         }
         
-        for(int y = newY; y <= newHeight; y++){
+        for(int y = newY; y < newHeight; y++){
                     
-            for(int x = 0; x <= newWidth; x++){
+            for(int x = 0; x < newWidth; x++){
                 
                 setPixel(x + offX, y + offY, color);
                 

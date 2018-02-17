@@ -28,6 +28,14 @@ public class Image {
         image.flush(); 
         
     }
+    
+    public Image(int pixel[], int width, int height){
+        
+        this.pixel = pixel;
+        this.width = width;
+        this.height = height;
+        
+    }
 
     public boolean isAlpha() {
         return alpha;
