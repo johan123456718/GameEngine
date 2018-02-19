@@ -102,7 +102,7 @@ public class Render{
             
         }
         
-        int index = x + y + pW;
+        int index = x + y * pW;
         
         if(zBuffer[index] > zDepth){
             
