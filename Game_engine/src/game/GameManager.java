@@ -11,7 +11,6 @@ public class GameManager extends AbstractGame {
 
     @Override
     public void update(GameLoop gc, float dt) {
-        
     }
 
     @Override
@@ -19,10 +18,8 @@ public class GameManager extends AbstractGame {
     }
     
     public static void main(String args[]){
-    
         GameLoop gc = new GameLoop(new GameManager());
-        gc.start();
-        
+        gc.start();  
     }
     
 }

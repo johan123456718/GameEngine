@@ -2,6 +2,9 @@ package game_engine.gfx;
 
 public class Light {
     
+    public static final int NONE = 0;
+    public static final int FULL = 1;
+    
     private int radius, diameter, color;
     private int[] lightMap;
     
@@ -10,6 +13,7 @@ public class Light {
         this.radius = radius;
         this.diameter = radius * 2;
         this.color = color;
+        lightMap = new int[diameter * diameter];
         
         for(int y = 0; y < diameter; y++){
             
@@ -33,7 +37,13 @@ public class Light {
         }
         
     }
-
+    
+    public int getLightValue(int x, int y){
+        if(x < 0 || x >= diameter || y < 0 || y >= diameter){
+            return 0;
+        }
+        return lightMap[x + y * diameter];
+    }
     public int getRadius() {
         return radius;
     }
