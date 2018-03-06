@@ -9,6 +9,7 @@ public class Image {
     private int width, height;
     private int[] pixel;
     private boolean alpha = false;
+    private int lightBlock = Light.NONE;
     
     //Loads in an image then flushes it from path
     public Image(String Path){
@@ -26,6 +27,14 @@ public class Image {
         pixel = image.getRGB(0, 0, width, height, null, 0, width);
         
         image.flush(); 
+        
+    }
+    
+    public Image(int pixel[], int width, int height){
+        
+        this.pixel = pixel;
+        this.width = width;
+        this.height = height;
         
     }
 
@@ -52,6 +61,12 @@ public class Image {
     }
     public void setPixel(int[] pixel) {
         this.pixel = pixel;
+    }
+    public int getLightBlock() {
+        return lightBlock;
+    }
+    public void setLightBlock(int lightBlock) {
+        this.lightBlock = lightBlock;
     }
     
 }

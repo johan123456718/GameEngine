@@ -13,8 +13,8 @@ public class Font {
     
         fontImage = new Image(path);
         
-        offSets = new int[59];
-        widths = new int[59];
+        offSets = new int[256];
+        widths = new int[256];
         unicode = 0;
         
         for(int i = 0; i < fontImage.getWidth(); i++){
