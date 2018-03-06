@@ -17,7 +17,10 @@ public class Render{
     private int pW,pH;
     private int[] p;
     private int[]zBuffer;
+    private int[] lightMap;
+    private int[] lightBlock;
     
+    private int ambientColor = 0xff6b6b6b;
     private int zDepth = 0;
     private boolean processing = false;
  
@@ -26,6 +29,8 @@ public class Render{
         pH = gc.getHeight();
         p = ((DataBufferInt)gc.getWindow().getImage().getRaster().getDataBuffer()).getData();
         zBuffer = new int[p.length];
+        lightMap = new int[p.length];
+        lightBlock = new int[p.length];
     }
     
     public void process(){
@@ -39,7 +44,7 @@ public class Render{
                     return -1;
                 }
                 if(i0.zDepth > i1.zDepth){
-                    return 11;
+                    return 1;
                 }
                 return 0;
             } 
@@ -51,6 +56,14 @@ public class Render{
             drawImage(ir.image, ir.offX, ir.offY);
         }
         
+        for(int i = 0; i < p.length; i++){
+            float r = ((lightMap[i] >> 16) & 0xff) / 255f;
+            float g = ((lightMap[i] >> 8) & 0xff) / 255f;
+            float b = (lightMap[i] & 0xff) / 255f;
+            
+            p[i] = ((int)(((p[i] >> 16) & 0xff) * r) << 16 | (int)(((p[i] >> 8) & 0xff) * g) << 8 | (int)((p[i] & 0xff) * b)); 
+        }
+        
         imageRequest.clear();
         processing = false;
         
@@ -60,17 +73,18 @@ public class Render{
         for(int i = 0; i < p.length; i++){
             p[i] = 0;
             zBuffer[i] = 0;
+            lightMap[i] = ambientColor;
+            lightBlock[i] = 0;
         }
     }
     
     //Render font
     public void drawText(String text, int offX, int offY, int color){
 
-        text = text.toUpperCase();
         int offSet = 0;
         
         for(int i = 0; i < text.length(); i ++){
-            int unicode  = text.codePointAt(i) - 32;
+            int unicode  = text.codePointAt(i);
             
             for(int y = 0; y < font.getFontImage().getHeight(); y++){
             
@@ -89,6 +103,24 @@ public class Render{
             offSet += font.getWidths()[unicode];
             
         }
+        
+    }
+    
+    public void setLightMap(int x, int y, int value){
+        
+        if(x < 0 || x >= pW || y < 0 || y >= pH){
+           
+            return;
+            
+        }
+        
+        int baseColor = lightMap[x + y * pW];
+        
+        int maxRed = Math.max((baseColor >> 16) & 0xff, (value >> 16) & 0xff);
+        int maxGreen = Math.max((baseColor >> 8) & 0xff, (value >> 8) & 0xff);
+        int maxBlue = Math.max(baseColor & 0xff, value & 0xff);
+        
+        lightMap[x + y * pW] = (maxRed << 16 | maxGreen << 8 | maxBlue);
         
     }
     
@@ -124,7 +156,7 @@ public class Render{
             int newGreen = ((pixelColor >> 8) & 0xff) - (int)((((pixelColor >> 8) & 0xff) - ((value >> 8) & 0xff)) * (alpha/255f));
             int newBlue = (pixelColor & 0xff) - (int)(((pixelColor & 0xff) - (value & 0xff)) * (alpha/255f));
 
-            p[index] = (255 << 24 | newRed << 16 | newGreen << 8 | newBlue); 
+            p[index] = (newRed << 16 | newGreen << 8 | newBlue); 
             
         }
                 
