@@ -43,6 +43,7 @@ public class GameManager extends AbstractGame {
                 
                 if(collision[x + y * levelWidth]){
                     r.drawFillRect(x * TS, y * TS, TS, TS, 0xff0f0f0f);
+                    
                 }
                 else{
                     r.drawFillRect(x * TS, y * TS, TS, TS, 0xfff9f9f9);                    

@@ -11,7 +11,7 @@ public class Player extends GameObject {
     
     private float speed = 100;
     private float fallSpeed = 10;
-    private float jump = -2;
+    private float jump = -3.4f;
     private boolean ground = false;
     
     private float fallDist = 0;
@@ -31,6 +31,16 @@ public class Player extends GameObject {
     @Override
     public void update(GameLoop gc, GameManager gm, float dt) {
         
+        //Left and Right
+        if(gc.getInput().isKey(KeyEvent.VK_D)){
+            offX += dt * speed;
+        }
+        
+        if(gc.getInput().isKey(KeyEvent.VK_A)){
+            offX -= dt * speed;
+        }
+        //End of Left and Right
+        
         //Beginning of Jump and Gravity
         fallDist += dt * fallSpeed;
         
@@ -48,9 +58,25 @@ public class Player extends GameObject {
         }   
         //End of Jump and Gravity
         
+        //Final position
         if(offY > GameManager.TS / 2){
             tileY ++;
             offY -= GameManager.TS;
+        }
+        
+        if(offY < -GameManager.TS / 2){
+            tileY--;
+            offY += GameManager.TS;
+        }
+        
+        if(offX > GameManager.TS / 2){
+            tileX ++;
+            offX -= GameManager.TS;
+        }
+        
+        if(offX < -GameManager.TS / 2){
+            tileX--;
+            offX += GameManager.TS;
         }
         
         posX = tileX * GameManager.TS + offX;

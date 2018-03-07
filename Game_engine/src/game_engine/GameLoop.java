@@ -39,7 +39,6 @@ public class GameLoop implements Runnable {
         window = new Window(this); 
         renderer = new Render(this);
         input = new Input(this);
-        
         thread = new Thread(this);
         thread.run();
     }
