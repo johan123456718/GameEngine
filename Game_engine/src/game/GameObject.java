@@ -10,7 +10,7 @@ public abstract class GameObject {
     protected int width, height;
     protected boolean dead = false;
     
-    public abstract void update(GameLoop gc, float dt);
+    public abstract void update(GameLoop gc, GameManager gm, float dt);
     public abstract void render(GameLoop gc, Render r);
 
     public String getTag() {

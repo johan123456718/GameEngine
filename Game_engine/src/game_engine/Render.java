@@ -353,9 +353,9 @@ public class Render{
             newHeight -= newHeight + offY - pH;
         }
         
-        for(int y = newY; y <= newHeight; y++){
+        for(int y = newY; y < newHeight; y++){
                     
-            for(int x = 0; x <= newWidth; x++){
+            for(int x = 0; x < newWidth; x++){
                 
                 setPixel(x + offX, y + offY, color);
                 

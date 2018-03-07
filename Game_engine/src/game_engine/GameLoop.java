@@ -65,7 +65,7 @@ public class GameLoop implements Runnable {
         game.init(this);
         
         while(running){
-            render = false;
+            render = true;
             firstTime = System.nanoTime() / 1000000000.0;
             passedTime  = firstTime - lastTime;
             lastTime = firstTime;
