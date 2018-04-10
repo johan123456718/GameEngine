@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package game_engine;
 
 import java.awt.event.KeyEvent;
@@ -11,9 +6,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author Elev
+ * Handles running the game, with a fixed framerate.
  */
+
 public class GameLoop implements Runnable {
     
     private Thread thread;
@@ -39,7 +34,6 @@ public class GameLoop implements Runnable {
         window = new Window(this); 
         renderer = new Render(this);
         input = new Input(this);
-        
         thread = new Thread(this);
         thread.run();
     }
@@ -61,6 +55,8 @@ public class GameLoop implements Runnable {
         double frameTime = 0;
         int frames = 0;
         int fps = 0;
+        
+        game.init(this);
         
         while(running){
             render = false;

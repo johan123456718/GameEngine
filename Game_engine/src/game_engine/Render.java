@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+/**
+ * Handles all type of rendering on the screen.
+ */
+
 public class Render{
     
     private Font font = Font.STANDARD;
@@ -318,6 +322,9 @@ public class Render{
         
     }
     
+    /**
+     * Draws a filled rectangle on the screen, specify a color with 0xff followed by any hexadecimal color in RGB.
+     */
     public void drawFillRect(int offX, int offY, int width, int height, int color){
         
         //Don't render
@@ -353,9 +360,9 @@ public class Render{
             newHeight -= newHeight + offY - pH;
         }
         
-        for(int y = newY; y <= newHeight; y++){
+        for(int y = newY; y < newHeight; y++){
                     
-            for(int x = 0; x <= newWidth; x++){
+            for(int x = 0; x < newWidth; x++){
                 
                 setPixel(x + offX, y + offY, color);
                 
@@ -440,6 +447,12 @@ public class Render{
     }
     public void setzDepth(int zDepth) {
         this.zDepth = zDepth;
+    }
+    public int getAmbientColor() {
+        return ambientColor;
+    }
+    public void setAmbientColor(int ambientColor) {
+        this.ambientColor = ambientColor;
     }
     
 }

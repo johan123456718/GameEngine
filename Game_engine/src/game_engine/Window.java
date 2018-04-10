@@ -4,6 +4,10 @@ import java.awt.*;
 import java.awt.image.*;
 import javax.swing.JFrame;
 
+/**
+ * Handles the players screen.
+ */
+
 public class Window {
     
     private JFrame frame;

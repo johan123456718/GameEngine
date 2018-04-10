@@ -8,6 +8,10 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
+/**
+ * Handles all input mouse and keyboard.
+ */
+
 public class Input implements KeyListener, MouseListener, MouseMotionListener, MouseWheelListener {
     
     private GameLoop gc;
@@ -55,17 +59,25 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
         }
         
     }
-    
+    /**
+     * Checks to see if any key at all is being pressed, continues sending true if the key is held down.
+     */
     public boolean isKey(int keyCode){
     
         return keys[keyCode];
         
     }
+    /**
+     * Checks to see if any key at all is being released, only sends true once.
+     */
     public boolean isKeyUp(int keyCode){
     
         return !keys[keyCode] && keysLast[keyCode];
         
     }
+    /**
+     * Checks to see if any key at all is pressed down, only sends true once.
+     */
     public boolean isKeyDown(int keyCode){
     
         return keys[keyCode] && !keysLast[keyCode];
