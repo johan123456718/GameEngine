@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+/**
+ * Handles all type of rendering on the screen.
+ */
+
 public class Render{
     
     private Font font = Font.STANDARD;
@@ -318,6 +322,9 @@ public class Render{
         
     }
     
+    /**
+     * Draws a filled rectangle on the screen, specify a color with 0xff followed by any hexadecimal color in RGB.
+     */
     public void drawFillRect(int offX, int offY, int width, int height, int color){
         
         //Don't render

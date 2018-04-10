@@ -3,13 +3,20 @@ package game;
 import game_engine.AbstractGame;
 import game_engine.GameLoop;
 import game_engine.Render;
+import game_engine.audio.SoundClip;
 import game_engine.gfx.Image;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+
+/**
+ * Handles starting the game and making sure everything is updated.
+ */
 
 public class GameManager extends AbstractGame {
     
     public static final int TS = 16;
     
+    private SoundClip sound;
     private boolean[] collision;
     private int levelWidth, levelHeight;
     private ArrayList<GameObject> objects = new ArrayList<GameObject>();
@@ -17,6 +24,7 @@ public class GameManager extends AbstractGame {
     public GameManager(){   
         objects.add(new Player(6, 4));   
         loadLevel("/level.png");
+        sound = new SoundClip("/audio/test.wav");
     }
     
     @Override
@@ -32,7 +40,10 @@ public class GameManager extends AbstractGame {
                 objects.remove(i);
                 i--;
             }  
-        }  
+        }
+        if(gc.getInput().isKeyDown(KeyEvent.VK_U)){
+            sound.play();
+        }
     }
 
     @Override

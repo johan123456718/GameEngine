@@ -4,6 +4,10 @@ import game_engine.GameLoop;
 import game_engine.Render;
 import java.awt.event.KeyEvent;
 
+/**
+ * The player game object.
+ */
+
 public class Player extends GameObject {
     
     private int tileX, tileY;

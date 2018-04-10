@@ -3,6 +3,10 @@ package game;
 import game_engine.GameLoop;
 import game_engine.Render;
 
+/**
+ * An abstract class handling all game objects in the game.
+ */
+
 public abstract class GameObject {
     
     protected String tag;
