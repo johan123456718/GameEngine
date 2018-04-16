@@ -27,7 +27,10 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
     private int mouseX, mouseY;
     private int scroll;
     
-    
+    /**
+     * Input constructor, adds all the listeners
+     * @param gc
+     */
     public Input(GameLoop gc){
     
         this.gc = gc;
@@ -42,6 +45,9 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
         
     }
     
+    /**
+     * Checks to see if any key has been pressed
+     */
     public void update(){
     
         scroll = 0;
@@ -60,7 +66,8 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
         
     }
     /**
-     * Checks to see if any key at all is being pressed, continues sending true if the key is held down.
+     * Checks to see if a specific key is being pressed, continues sending true if the key is held down.
+     * @param KeyCode
      */
     public boolean isKey(int keyCode){
     
@@ -68,7 +75,8 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
         
     }
     /**
-     * Checks to see if any key at all is being released, only sends true once.
+     * Checks to see if a specific key is being released, only sends true once.
+     * @param KeyCode
      */
     public boolean isKeyUp(int keyCode){
     
@@ -76,23 +84,35 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
         
     }
     /**
-     * Checks to see if any key at all is pressed down, only sends true once.
+     * Checks to see if a specific key is pressed down, only sends true once.
+     * @param KeyCode
      */
     public boolean isKeyDown(int keyCode){
     
         return keys[keyCode] && !keysLast[keyCode];
         
     }
+    /**
+     * Checks to see if a specific button(on the mosue) is being pressed, continues sending true if the key is held down.
+     * @param KeyCode
+     */
     public boolean isButton(int button){
-    
         return buttons[button];
         
     }
+    /**
+     * Checks to see if a specific button(on the mouse) is being released, only sends true once.
+     * @param KeyCode
+     */
     public boolean isButtonUp(int button){
     
         return !buttons[button] && buttonsLast[button];
         
     }
+    /**
+     * Checks to see if a specific button(on the mouse) is pressed down, only sends true once.
+     * @param KeyCode
+     */
     public boolean isButtonDown(int button){
     
         return buttons[button] && !buttonsLast[button];
@@ -102,12 +122,18 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
     @Override
     public void keyTyped(KeyEvent e) {
     }
-
+    /**
+     * Checks to see if any key at all is being pressed
+     * @param e 
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         keys[e.getKeyCode()] = true;
     }
-
+    /**
+     * Chekcs to see if any key at all got released
+     * @param e 
+     */
     @Override
     public void keyReleased(KeyEvent e) {
         keys[e.getKeyCode()] = false;
@@ -116,37 +142,56 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
     @Override
     public void mouseClicked(MouseEvent e) {
     }
-
+    /**
+     * Checks to see if any button(on the mouse) at al is being pressed.
+     * @param e 
+     */
     @Override
     public void mousePressed(MouseEvent e) {
         buttons[e.getButton()] = true;
     }
-
+    /**
+     * Checks to see if any button(on the mouse) at all got released.
+     * @param e 
+     */
     @Override
     public void mouseReleased(MouseEvent e) {
         buttons[e.getButton()] = false;
     }
-
+    /**
+     * empty
+     */
     @Override
     public void mouseEntered(MouseEvent e) {
     }
-
+    /**
+     * empty
+     */
     @Override
     public void mouseExited(MouseEvent e) {
     }
-
+    /**
+     * Checks to see how far the mouse has been dragged in X and Y
+     * @param e 
+     */
     @Override
     public void mouseDragged(MouseEvent e) {
         mouseX = (int)(e.getX() / gc.getScale());
         mouseY = (int)(e.getY() / gc.getScale());
     }
-
+    /**
+     * Checks to see how far the mouse has been moved in X and Y
+     * @param e 
+     */
     @Override
     public void mouseMoved(MouseEvent e) {
         mouseX = (int)(e.getX() / gc.getScale());
         mouseY = (int)(e.getY() / gc.getScale());
     }
-
+    /**
+     * Checks to see if the mousewheel has been move, differentiates betweem up and down scroll
+     * @param e 
+     */
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
         scroll = e.getWheelRotation();
