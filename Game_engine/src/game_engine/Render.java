@@ -30,7 +30,9 @@ public class Render{
     private int ambientColor = 0xff232323;
     private int zDepth = 0;
     private boolean processing = false;
- 
+    /**
+     * The render constructor, initializes all arrays and variables.
+     */
     public Render(GameLoop gc){
         pW = gc.getWidth();
         pH = gc.getHeight();
@@ -39,7 +41,9 @@ public class Render{
         lightMap = new int[p.length];
         lightBlock = new int[p.length];
     }
-    
+    /**
+     * Handles image and lightprocessing to render correctly and in the right order.
+     */
     public void process(){
         
         processing = true;
@@ -82,7 +86,9 @@ public class Render{
         processing = false;
         
     }
-    
+    /**
+     * Makes sure the screen is clean.
+     */
     public void clear(){
         for(int i = 0; i < p.length; i++){
             p[i] = 0;
@@ -92,7 +98,13 @@ public class Render{
         }
     }
     
-    //Render font
+    /**
+     * Draws text on the screen.
+     * @param text
+     * @param offX
+     * @param offY
+     * @param color 
+     */
     public void drawText(String text, int offX, int offY, int color){
 
         int offSet = 0;
@@ -119,7 +131,12 @@ public class Render{
         }
         
     }
-    
+    /**
+     * Handles the lightmap with all the lights in.
+     * @param x
+     * @param y
+     * @param value 
+     */
     public void setLightMap(int x, int y, int value){
         
         if(x < 0 || x >= pW || y < 0 || y >= pH){
@@ -137,7 +154,12 @@ public class Render{
         lightMap[x + y * pW] = (maxRed << 16 | maxGreen << 8 | maxBlue);
         
     }
-    
+    /**
+     * Handles which images block the light depending on zDepth.
+     * @param x
+     * @param y
+     * @param value 
+     */
     public void setLightBlock(int x, int y, int value){
         
         if(x < 0 || x >= pW || y < 0 || y >= pH){
@@ -156,7 +178,9 @@ public class Render{
         
     }
     
-    //Assigns the image pixels to an array and makes transparent for certain value
+    /**
+     * Assigns the image pixels to an array and makes transparent for certain value
+     */
     public void setPixel(int x, int y, int value){
     
         int alpha = ((value >> 24) & 0xff);
@@ -194,7 +218,9 @@ public class Render{
                 
     }
     
-    //Draws an image on screen
+    /**
+     * Draws an image on screen
+     */
     public void drawImage(Image image, int offX, int offY){
         
         if(image.isAlpha() && !processing){
@@ -249,7 +275,9 @@ public class Render{
         
     }
     
-    //Draws an imagetile on screen
+    /**
+     * Draws an imagetile on screen.
+     */
     public void drawImageTile(ImageTile image, int offX, int offY, int tileX, int tileY){
     
         if(image.isAlpha() && !processing){
@@ -303,7 +331,14 @@ public class Render{
         }
         
     }
-    
+    /**
+     * Draws a non filled rectangle on the screen, specify a color with 0xff followed by any RGB color in hexadecimal.
+     * @param offX
+     * @param offY
+     * @param width
+     * @param height
+     * @param color 
+     */
     public void drawRect(int offX, int offY, int width, int height, int color){
         
         for(int y = 0; y <= height; y++){

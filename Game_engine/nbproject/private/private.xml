@@ -5,19 +5,16 @@
         <group>
             <file>file:/Users/elev/Dropbox/Gymnasiearbete/Game%20Engine/Game_engine/src/game_engine/AbstractGame.java</file>
             <file>file:/Users/elev/Dropbox/Gymnasiearbete/Game%20Engine/Game_engine/src/game_engine/Window.java</file>
-            <file>file:/Users/elev/Dropbox/Gymnasiearbete/Game%20Engine/Game_engine/src/game_engine/Input.java</file>
             <file>file:/Users/elev/Dropbox/Gymnasiearbete/Game%20Engine/Game_engine/src/game_engine/Render.java</file>
             <file>file:/Users/elev/Dropbox/Gymnasiearbete/Game%20Engine/Game_engine/src/game_engine/GameLoop.java</file>
             <file>file:/Users/elev/Dropbox/Gymnasiearbete/Game%20Engine/Game_engine/src/game_engine/gfx/ImageTile.java</file>
+            <file>file:/Users/elev/Dropbox/Gymnasiearbete/Game%20Engine/Game_engine/src/game/GameObject.java</file>
             <file>file:/Users/elev/Dropbox/Gymnasiearbete/Game%20Engine/Game_engine/res/standardfont.png</file>
             <file>file:/Users/elev/Dropbox/Gymnasiearbete/Game%20Engine/Game_engine/src/game_engine/audio/SoundClip.java</file>
             <file>file:/Users/elev/Dropbox/Gymnasiearbete/Game%20Engine/Game_engine/src/game_engine/gfx/Image.java</file>
+            <file>file:/Users/elev/Dropbox/Gymnasiearbete/Game%20Engine/Game_engine/src/game_engine/gfx/Light.java</file>
             <file>file:/Users/elev/Dropbox/Gymnasiearbete/Game%20Engine/Game_engine/src/game_engine/gfx/ImageRequest.java</file>
             <file>file:/Users/elev/Dropbox/Gymnasiearbete/Game%20Engine/Game_engine/src/game_engine/gfx/LightRequest.java</file>
-            <file>file:/Users/elev/Dropbox/Gymnasiearbete/Game%20Engine/Game_engine/src/game/GameManager.java</file>
-            <file>file:/Users/elev/Dropbox/Gymnasiearbete/Game%20Engine/Game_engine/src/game_engine/gfx/Font.java</file>
-            <file>file:/Users/elev/Dropbox/Gymnasiearbete/Game%20Engine/Game_engine/src/game/GameObject.java</file>
-            <file>file:/Users/elev/Dropbox/Gymnasiearbete/Game%20Engine/Game_engine/src/game_engine/gfx/Light.java</file>
         </group>
     </open-files>
 </project-private>
