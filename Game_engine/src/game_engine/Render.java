@@ -15,7 +15,7 @@ import java.util.Comparator;
  * Handles all type of rendering on the screen.
  */
 
-public class Render{
+public class Render{ 
     
     private Font font = Font.STANDARD;
     private ArrayList<ImageRequest> imageRequest = new ArrayList<ImageRequest>();
